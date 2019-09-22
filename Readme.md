@@ -102,9 +102,6 @@ soft-agent                     Operator application for Genesis
 
 ```
 
-## Checking for package updates
-
-
 # Uninstalling software
 
     PS C:\> apm -remove supervisor
