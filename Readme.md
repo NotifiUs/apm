@@ -23,7 +23,7 @@ APM is a Windows PowerShell Module. After you download and extract, you can mana
 
 Taking the cue from [Chocolatey.org](https://chocolatey.org), we're testing a one-line install script.
 
-    Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://github.com/NotifiUs/apm/blob/master/install.ps1'))
+    Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/NotifiUs/apm/master/install.ps1'))
 
 
 Once the module is imported, you can run `apm` or `amtelco` in any powershell.
