@@ -9,14 +9,17 @@
     if( $exists )
     {
         Write-Output "[apm] The apm powershell module is currently installed."
-        Write-Output "[apm] Removing the existing apm powershell module..."
+        Write-Output "[apm] Removing any existing apm powershell module..."
         Remove-Module apm -Force
-
     }
     else
     {
         Write-Output "[apm] The apm powershell is not currently installed."
     }
+
+    Write-Output "[apm] Removed ProgramData and PSModules apm folders."
+    Remove-Item  $Env:ProgramData\apm -Recurse -Force
+    Remove-Item  $Env:ProgramFiles\WindowsPowerShell\Modules\apm -Recurse -Force
 
     Write-Output "[apm] Downloading the latest version."
 
