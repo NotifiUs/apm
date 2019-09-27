@@ -50,8 +50,8 @@
 
     Copy-Item -Path "$Env:ProgramData\apm\apm-master\apm" -Destination "$Env:ProgramFiles\WindowsPowerShell\Modules" -Recurse -Force
 
-    Import-Module -Name apm
-
+    $importResult = Import-Module -Name apm
+    Write-Output $importResult | format-table
     Write-Output "[apm] Complete!"
 
     Write-Output ""
