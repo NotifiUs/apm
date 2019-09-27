@@ -1,4 +1,3 @@
-
 #Requires -RunAsAdministrator
 
 # Remove before going
@@ -42,14 +41,10 @@ function Get-WelcomeMessage
     Write-Output ""
     Write-Output "[apm] Welcome to the amtelco package manager (apm) $appVersion by Patrick Labbett <patrick.labbett@notifi.us>"
     Write-Output ""
-}
-
-
-function Get-AdminRequiredMessage
-{
-    Write-Output "[apm] Please run this command as an administrator."
+    Write-Warning "THIS SOFTWARE IS CURRENTLY NOT PRODUCTION READY. THANK YOU FOR BETA TESTING."
     Write-Output ""
 }
+
 function Get-UsageMessage
 {
     Write-Output "Description:"
@@ -65,28 +60,16 @@ function Get-UsageMessage
     Write-Output "Install the latest general availability release of Intelligent Series Supervisor"
     Write-Output "apm -install supervisor"
     Write-Output ""
-    # Write-Output "Install the latest general availability release from the 5.02 branch"
-    # Write-Output ".\apm.ps1 -install supervisor -version 5.02"
-    # Write-Output ""
-    Write-Output "Install the latest general availability release and save the installer to c:\custom"
-    Write-Output "apm -install supervisor -folder C:\custom"
-    Write-Output ""
     Write-Output "Uninstall the currently installed version of Intelligent Series Supervisor"
     Write-Output "apm -remove supervisor"
     Write-Output ""
-    # Write-Output "Update apm to the latest version:"
-    # Write-Output ".\apm.ps1 -selfupdate"
-    # Write-Output ""
     Write-Output "See information about apm"
     Write-Output "apm -about"
     Write-Output ""
     Write-Output ""
     Write-Output "Options:"
-    Write-Output "  -folder C:\path     Specify the folder where downloaded installer files are saved. Defaults to C:\apm"
     Write-Output "  -install            Specify the package to install. Supported packages are soft-agent, telephone-agent, and supervisor"
     Write-Output "  -remove             Removes the specified package from the system."
-    # Write-Output "  -version 5.03       Specify the major version branch to download the package from."
-    # Write-Output "  -selfupdate         Updates apm to the latest version"
     Write-Output "  -about              Displays the application version and contact information"
     Write-Output "  -available          Displays a list of available packages supported"
     Write-Output ""
@@ -95,18 +78,16 @@ function Get-UsageMessage
 
 function Get-AvailableMessage
 {
-
     $packages = @{
         supervisor = "Intelligent Series Supervisor application";
         "soft-agent" = "Operator application for Genesis";
         "telephone-agent" = "Operator application for Infinity";
-
     }
     
     Write-Output "[apm] Available packages are:"
     Write-Output $packages | Format-Table
     
-     return
+    return
 }
 
 function Get-SoftwarePackage
@@ -120,18 +101,12 @@ function Get-SoftwarePackage
             $filename = "Amtelco_Intelligent_Series_Supervisor_5.03.6774.60.msi"
         }
         "soft-agent" { 
-            Write-Output ""
-            Write-Output "[apm] Support for Soft Agent coming soon!"
-            Write-Output ""
-             return
-            
+            $url = "https://service.amtelco.com/ftp/softwaredisk/ISeries_5.03.0x/Soft_Agent/Current_Release/5.03.6774.63/Amtelco.Agent.Agent.Setup.msi"
+            $filename = "Amtelco_Intelligent_Series_Soft_Agent_5.03.6774.63.msi"
         }
         "telephone-agent" {
-            Write-Output ""
-            Write-Output "[apm] Support for Telephone Agent coming soon!"
-            Write-Output ""
-             return
-            
+              $url = "https://service.amtelco.com/ftp/softwaredisk/ISeries_5.03.0x/Windows_Operator/Current_Release/5.60.6774.19/WinOpSetup.msi"
+              $filename = "Amtelco_Infinity_Telephone_Agent_5.60.6774.19.msi"
          }
          default {
             Write-Output ""
@@ -147,9 +122,7 @@ function Get-SoftwarePackage
     
     Write-Output "[apm] Package link selected: $url"
 
-    $filename = "Amtelco_Intelligent_Series_Supervisor_5.03.6774.60.msi"
     Write-Output "[apm] Setting filename to $filename"
-
 
     # Set our location and filename to save the file
     $location = Join-Path -Path $folder -ChildPath $filename
@@ -184,7 +157,7 @@ function Get-SoftwarePackage
 
     if( $result.ExitCode -eq 0 )
     {
-        Write-Output "[apm] Application successfully installed! It's recommended to reboot your machine."
+        Write-Output "[apm] Application successfully installed! It's recommended to reboot your machine once you are done installing applications."
         Write-Output ""
     }
     else {
@@ -192,20 +165,13 @@ function Get-SoftwarePackage
         Write-Output "[apm] Exit code of installer: $($result.ExitCode)"
         Write-Output "[apm] This probably means you need to remove the existing application first. "
         Write-Output ""
-        Write-Output "[HINT] Try apm -remove $package"
+        Write-Output "Hint! Try: apm -remove $package"
         Write-Output "" 
     }
 
     Write-Output "[apm] Done! Thank you for using apm $appVersion"
     Write-Output ""
 
-     return
-}
-
-function Get-SelfUpdateMessage
-{
-    Write-Output "[apm] Self update capability is under development"
-    Write-Output ""
     return
 }
 
@@ -230,21 +196,18 @@ function Remove-SoftwarePackage
             Write-Output "[apm] Support for Soft Agent coming soon!"
             Write-Output ""
              return
-            
         }
         "telephone-agent" {
             Write-Output ""
             Write-Output "[apm] Support for Telephone Agent coming soon!"
             Write-Output ""
              return
-            
          }
          default {
             Write-Output ""
             Write-Output "[apm] No package found using this alias. Please try supervisor, soft-agent, or telephone-agent"
             Write-Output ""
              return
-            
          }
     }
 
@@ -256,20 +219,19 @@ function Remove-SoftwarePackage
         Write-Output $installed
 
         Write-Output "[apm] Removing program: $remove ($appRemoval). Please wait..."
-    
-        #$uninstallResult = $app.uninstall();
+
         $uninstallResult = $installed.uninstall()
 
        if( $uninstallResult.ReturnValue -eq 0 )
        {
-        Write-Output "[apm] Successfully removed $appRemoval!"
+            Write-Output "[apm] Successfully removed $appRemoval!"
        }
        else
        {
-        Write-Output "[apm] ERROR removing application. Try removing it manually."
+            Write-Output "[apm] ERROR removing application. Try removing it manually."
        }
         
-       Write-Output "[apm] Done! Thank you for using apm $appVersion"
+        Write-Output "[apm] Done! Thank you for using apm $appVersion"
         Write-Output ""
         return
     }
@@ -278,15 +240,11 @@ function Remove-SoftwarePackage
         Write-Output ""
         return
     }
-   
 }
-
 
 function apm
 {
     param(
-    
-        # [string] $folder = "$Env:ProgramData" + "\apm\software\",
         [string] $install,
         [string] $remove,
         [string] $version,
@@ -295,35 +253,40 @@ function apm
         [switch] $selfupdate
     )
 
+    # Set our variables needed throughout the script
     $script:folder = "$Env:ProgramData\apm"
-    $script:appVersion = "v0.0.1"
+    $script:appVersion = "v0.0.2"
 
+    # Show our welcome message
     Get-WelcomeMessage
 
+    # Walk through the command line options
     if( $available )
     {
+        # Show list of available packages
         Get-AvailableMessage
     }
-    # elseif( $selfupdate )
-    # {
-    #     Get-SelfUpdateMessage
-    # }
     elseif( $about )
     {
+        # Show the about message
         Get-AboutMessage
     }
     elseif( $install -and $install -ne "" )
     {
+        # Install the package
         Get-SoftwarePackage $install
     }
     elseif( $remove -and $remove -ne "" )
     {
+        # Remove the package
         Remove-SoftwarePackage $remove
     }
     else
     {
+        # Show our usage message
         Get-UsageMessage 
     }
 }
 
+# Export an alias "amtelco" so we can run "apm" or "amtelco" in the command line
 New-Alias -Name amtelco -Value apm

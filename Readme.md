@@ -10,7 +10,7 @@ The primary use case is for automated and/or unattended software installations f
 
 APM replaces the process of logging in, finding, downloading, and going through the installation process for Amtelco software with simple command-line interface (similar in concept to apt, yum, homebrew, composer, npm, yarn, etc. )
 
-# Installation and usage
+# Manual Installation and Usage
 
 APM is a Windows PowerShell Module. After you download and extract, you can manage the APM PowerShell module like this:
 
@@ -19,9 +19,9 @@ APM is a Windows PowerShell Module. After you download and extract, you can mana
     PS C:\> Get-Module apm
     PS C:\> Remove-Module apm
     
-In this scenario, the module is only available in the current shell's session. 
+In this scenario, the module is only available in the current shell's session. You can copy the `apm` folder to a location within $Env:PSModulePath for auto-discovery. 
 
-## Copy/paste install command (beta)
+## Automated install script (beta)
 
 Taking the cue from [Chocolatey.org](https://chocolatey.org), we're testing a one-line install script.
 
@@ -33,6 +33,10 @@ This also allows us to bypass having to issue a `WM_SETTINGCHANGE ` broadcast to
 
 Once the module is imported, you can run `apm` or `amtelco` in any powershell.
 
+
+## Updating to the latest version
+
+Run the automated install script again to update to the latest published version. 
 
 # Administrative rights
 
@@ -72,15 +76,6 @@ We actually use the WMI `Win32_Product` API to search, which is slower and has d
 
 We keep a copy of the downloaded `.msi` in a local cache directory. 
 The default cache directory location is `C:\ProgramData\apm\`
-
-<!--
-You can specify the folder used for storage using the `-folder` argument:
-
-```console
-PS C:\> apm -install supervisor -folder C:\custom\download\location
-```
--->
-
 
 # Quick Start
 
