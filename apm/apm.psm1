@@ -182,8 +182,6 @@ function Get-SoftwarePackage
 
     $result = Start-Process -FilePath "msiexec.exe" -ArgumentList "/package `"$location`" /passive /qn" -Wait -Passthru
 
-    
-
     if( $result.ExitCode -eq 0 )
     {
         Write-Output "[apm] Application successfully installed! It's recommended to reboot your machine."
@@ -191,8 +189,10 @@ function Get-SoftwarePackage
     }
     else {
         Write-Output "[apm] ERROR installing application"
-        Write-Output "[apm] Exit code of installer:"
-        Write-Output $result.ExitCode
+        Write-Output "[apm] Exit code of installer: $($result.ExitCode)"
+        Write-Output "[apm] This probably means you need to remove the existing application first. "
+        Write-Output ""
+        Write-Output "[HINT] Try apm -remove $package"
         Write-Output "" 
     }
 
@@ -208,6 +208,14 @@ function Get-SelfUpdateMessage
     Write-Output ""
     return
 }
+
+function Remove-Everything
+{
+    Write-Output "[apm] Cleaning all downloaded packages and settings"
+    Write-Output ""
+    return
+}
+
 function Remove-SoftwarePackage
 {
     Param( [string] $remove )
@@ -274,11 +282,11 @@ function Remove-SoftwarePackage
 }
 
 
-function APM
+function apm
 {
     param(
     
-        [string] $folder = "C:\apm\",
+        # [string] $folder = "$Env:ProgramData" + "\apm\software\",
         [string] $install,
         [string] $remove,
         [string] $version,
@@ -287,6 +295,7 @@ function APM
         [switch] $selfupdate
     )
 
+    $script:folder = "$Env:ProgramData" + "\apm\",
     $script:appVersion = "v0.0.1"
 
     Get-WelcomeMessage
@@ -317,4 +326,4 @@ function APM
     }
 }
 
-New-Alias -Name amtelco -Value APM
+New-Alias -Name amtelco -Value apm

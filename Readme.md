@@ -18,6 +18,8 @@ APM is a Windows PowerShell Module. After you download and extract, you can mana
     PS C:\> Get-Module
     PS C:\> Get-Module apm
     PS C:\> Remove-Module apm
+    
+In this scenario, the module is only available in the current shell's session. 
 
 ## Copy/paste install command (beta)
 
@@ -25,8 +27,12 @@ Taking the cue from [Chocolatey.org](https://chocolatey.org), we're testing a on
 
     Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/NotifiUs/apm/master/install.ps1'))
 
+This script will install `apm` to `$Env:ProgramFiles\WindowsPowerShell\Modules\apm` so it's available in all session shells.
+
+This also allows us to bypass having to issue a `WM_SETTINGCHANGE ` broadcast to update the module path. 
 
 Once the module is imported, you can run `apm` or `amtelco` in any powershell.
+
 
 # Administrative rights
 
@@ -64,13 +70,16 @@ We actually use the WMI `Win32_Product` API to search, which is slower and has d
 
 > Todo: Tets and use the registry method of uninstalling applications
 
-We keep a copy of the downloaded `.msi` in a local cache directory.
+We keep a copy of the downloaded `.msi` in a local cache directory. 
+The default cache directory location is `C:\ProgramData\apm\`
 
+<!--
 You can specify the folder used for storage using the `-folder` argument:
 
 ```console
 PS C:\> apm -install supervisor -folder C:\custom\download\location
 ```
+-->
 
 
 # Quick Start
@@ -92,9 +101,6 @@ authentication prompt will appear. Enter the username and password just as if yo
 # Seeing what's available to install
 
 Get a list of installable packages
-
-    
-
 
 ```powershell
 PS C:\> apm -available
@@ -118,7 +124,7 @@ This option will uninstall supervisor and leave behind the registry settings (co
 
 # View about information about APM
 
-You can see the current version and about information of APM by running:
+You can see the current version and about section of APM by running:
 
     PS C:\> apm -about
 
