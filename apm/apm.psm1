@@ -295,11 +295,11 @@ function apm
         [switch] $selfupdate
     )
 
-    $script:folder = $Env:ProgramData\apm
+    $script:folder = "$Env:ProgramData\apm"
     $script:appVersion = "v0.0.1"
 
     Get-WelcomeMessage
-    
+
     if( $available )
     {
         Get-AvailableMessage
@@ -318,7 +318,7 @@ function apm
     }
     elseif( $remove -and $remove -ne "" )
     {
-        Remove-SoftwarePackage $remove  
+        Remove-SoftwarePackage $remove
     }
     else
     {
