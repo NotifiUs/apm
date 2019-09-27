@@ -295,7 +295,7 @@ function apm
         [switch] $selfupdate
     )
 
-    $script:folder = $Env:ProgramData\apm\,
+    $script:folder = "$Env:ProgramData\apm\",
     $script:appVersion = "v0.0.1"
 
     Get-WelcomeMessage
