@@ -10,7 +10,7 @@
     RootModule = '.\apm.psm1'
 
     # Version number of this module.
-    ModuleVersion = '0.0.2'
+    ModuleVersion = '0.0.3'
     
     # ID used to uniquely identify this module
     GUID = '6AEC2CFE-3B2D-44C5-9349-ABB1739B181C'

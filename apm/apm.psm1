@@ -192,16 +192,10 @@ function Remove-SoftwarePackage
             $appRemoval = "Intelligent Series Supervisor"
         }
         "soft-agent" { 
-            Write-Output ""
-            Write-Output "[apm] Support for Soft Agent coming soon!"
-            Write-Output ""
-             return
+            $appRemoval = "Soft Agent"
         }
         "telephone-agent" {
-            Write-Output ""
-            Write-Output "[apm] Support for Telephone Agent coming soon!"
-            Write-Output ""
-             return
+            $appRemoval = "Infinity Telephone Agent"
          }
          default {
             Write-Output ""
@@ -255,7 +249,7 @@ function apm
 
     # Set our variables needed throughout the script
     $script:folder = "$Env:ProgramData\apm"
-    $script:appVersion = "v0.0.2"
+    $script:appVersion = "v0.0.3"
 
     # Show our welcome message
     Get-WelcomeMessage
