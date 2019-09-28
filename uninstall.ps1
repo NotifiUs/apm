@@ -17,9 +17,9 @@
         Write-Output "[apm] The apm powershell is not currently installed."
     }
 
-    Write-Output "[apm] Removed ProgramData and PSModules apm folders."
-    Remove-Item  $Env:ProgramData\apm -Recurse -Force
-    Remove-Item  $Env:ProgramFiles\WindowsPowerShell\Modules\apm -Recurse -Force
+    Write-Output "[apm] Removing ProgramData and PSModules apm folders."
+    Remove-Item  $Env:ProgramData\apm -Recurse -Force -ErrorAction SilentlyContinue
+    Remove-Item  $Env:ProgramFiles\WindowsPowerShell\Modules\apm -Recurse -Force -ErrorAction SilentlyContinue
 
 
     Write-Output "[apm] Complete!"

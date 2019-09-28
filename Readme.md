@@ -91,7 +91,21 @@ PS C:\> apm -install telephone-agent
 When you run a command that needs to download a package file from Amtelco, a Windows credentials 
 authentication prompt will appear. Enter the username and password just as if you were logging into their website directly.
 
-> In Progress: Securely saving credentials in the Windows Credential Store
+## Authentication when using automation
+
+You'll need to interactively provide credentials initially. 
+Once saved, you can run any command automated without being prompted for credentials. 
+
+```powershell
+PS C:\> apm -credentials save
+```
+
+To clear your credentials (delete the encrypted file):
+```powershell
+PS C:\> apm -credentials clear
+```
+
+Please note, performing an upgrade to a new version of apm will wipe out your saved credentials.
 
 # Seeing what's available to install
 

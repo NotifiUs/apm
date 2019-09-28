@@ -127,8 +127,17 @@ function Get-SoftwarePackage
     # Set our location and filename to save the file
     $location = Join-Path -Path $folder -ChildPath $filename
 
-    # This prompts a username/password message in a secure way to enter your service code.
-    $credentials = Get-Credential -Message "Please authenticate with service.amtelco.com"
+    # Check if credentials exist
+    if( ( Test-Path "$folder\credentials.xml" ) )
+    {
+       # This loads the encrypted credential string that was previously saved
+       $credentials = Import-CliXml -Path "$folder\credentials.xml"
+    }
+    else
+    {
+        # This prompts a username/password message in a secure way to enter your service code.
+        $credentials = Get-Credential -Message "Please authenticate with service.amtelco.com"
+    }
 
     if( ! $credentials )
     {
@@ -166,13 +175,52 @@ function Get-SoftwarePackage
         Write-Output "[apm] This probably means you need to remove the existing application first. "
         Write-Output ""
         Write-Output "Hint! Try: apm -remove $package"
-        Write-Output "" 
+        Write-Output ""
     }
 
     Write-Output "[apm] Done! Thank you for using apm $appVersion"
     Write-Output ""
 
     return
+}
+
+function Set-Credentials
+{
+    Param( [string] $action )
+
+    Write-Output "[apm] Making sure the storage path exists at $folder"
+    $created = New-Item -Path $folder -ItemType "directory" -Force
+
+
+    if( $action -eq "save" )
+    {
+        Write-Output "[apm] Your service code will be encrypted and saved to the local filesystem."
+        Write-Output "[apm] Please enter the username you use to login to Amtelco FTP site"
+
+        $credentials = Get-Credential
+
+        $credentials | Export-CliXml -Path "$folder\credentials.xml" -Force
+
+        Write-Output ""
+        Write-Output "[apm] Your credentials have been saved!"
+        Write-Output ""
+    }
+    elseif( $action -eq "clear" )
+    {
+
+        if( Test-Path "$folder\credentials.xml" )
+        {
+            Remove-Item  "$folder\credentials.xml" -Force
+        }
+
+        Write-Output ""
+        Write-Output "[apm] Your credentials have been cleared!"
+        Write-Output ""
+    }
+    else
+    {
+    }
+
 }
 
 function Remove-Everything
@@ -241,15 +289,14 @@ function apm
     param(
         [string] $install,
         [string] $remove,
-        [string] $version,
         [switch] $about,
         [switch] $available,
-        [switch] $selfupdate
+        [string] $credentials
     )
 
     # Set our variables needed throughout the script
     $script:folder = "$Env:ProgramData\apm"
-    $script:appVersion = "v0.0.3"
+    $script:appVersion = "v0.0.4"
 
     # Show our welcome message
     Get-WelcomeMessage
@@ -264,6 +311,10 @@ function apm
     {
         # Show the about message
         Get-AboutMessage
+    }
+    elseif( $credentials -and $credentials -ne "" )
+    {
+        Set-Credentials $credentials
     }
     elseif( $install -and $install -ne "" )
     {
