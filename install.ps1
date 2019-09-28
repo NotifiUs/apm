@@ -18,8 +18,8 @@
     }
 
     Write-Output "[apm] Removed ProgramData and PSModules apm folders."
-    Remove-Item  $Env:ProgramData\apm -Recurse -Force
-    Remove-Item  $Env:ProgramFiles\WindowsPowerShell\Modules\apm -Recurse -Force
+    Remove-Item  $Env:ProgramData\apm -Recurse -Force -ErrorAction SilentlyContinue
+    Remove-Item  $Env:ProgramFiles\WindowsPowerShell\Modules\apm -Recurse -Force -ErrorAction SilentlyContinue
 
     Write-Output "[apm] Downloading the latest version."
 
