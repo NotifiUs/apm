@@ -27,12 +27,14 @@ As we get more installs under our belt at beta sites, we'll relax these requirem
 
 # Quick Start
 
+From a powershell running as administrator:
+
 ```powershell
-PS C:\> Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/NotifiUs/apm/master/install.ps1'))
-PS C:\> apm -credentials save
-PS C:\> apm -install supervisor
-PS C:\> apm -install soft-agent
-PS C:\> apm -install telephone-agent
+Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/NotifiUs/apm/master/install.ps1'))
+apm -credentials save
+apm -install supervisor
+apm -install soft-agent
+apm -install telephone-agent
 ```
 
 # Automated install script (beta)
