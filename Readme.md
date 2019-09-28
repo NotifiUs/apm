@@ -56,7 +56,7 @@ Once the module is imported, you can run `apm` or `amtelco` in any powershell.
     Get-Module apm
     Remove-Module apm
     
-In this scenario, the module is only available in the current shell's session. You can copy the `apm` folder to a location within $Env:PSModulePath for auto-discovery. 
+In this scenario, the module is only available in the current shell's session. You can copy the `apm` folder to a location within `$Env:PSModulePath` for auto-discovery. 
 
 
 # Updating to the latest version
