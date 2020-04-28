@@ -1,5 +1,8 @@
+# NOTICE: Deprecated
 
-# Amtelco Package Manager (apm)
+> **This repository has been archived since the "Current Versions" on the Amtelco download site are generally too far behind or not client-specific enough to be useful.**
+
+## Amtelco Package Manager (apm)
 
 A package manager to streamline installation of Amtelco Intelligent Series applications.
 You must have an active Field Service contract with Amtelco.
